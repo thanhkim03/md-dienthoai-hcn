@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>IPHONE</h1>
+<button id="onOff-Iphone" onclick="onOff(this.id)">POWED</button>
+<button id="pin-Iphone" onclick="checkPin(this.id)">PIN</button>
+<button id="message-Iphone" onclick="sendMessage(this.id)">SEND</button>
+<br/>
+<textarea style="background-color: aquamarine" id="iphone" cols="30" rows="10"></textarea>
+<h1>NOKIA</h1>
+<button id="onOff-Nokia" onclick="onOff(this.id)">POWED</button>
+<button id="pin-Nokia" onclick="checkPin(this.id)">PIN</button>
+<button id="message-Nokia" onclick="sendMessage(this.id)">SEND</button>
+<button id="inbox-Nokia" onclick="checkInbox(this.id)">INBOX</button><br/>
+<textarea id="nokia" cols="30" rows="10"></textarea>
+<script>
+    class Mobie {
+        constructor(name,status,pin,outBox,inBox) {
+            this.status=status
+            this.name =name
+            this.pin =pin
+            this.outBox =[]
+            this.inBox =[]
+        }
+        getStatus(){
+            return this.status
+        }
+        setStatus(){
+            this.status = !this.status
+        }
+        getName(){
+            return this.name
+        }
+        setName(name){
+            this.name =name
+        }
+        getPin(){
+            return this.pin
+        }
+        setPin(){
+            this.pin =pin
+        }
+        getOutBox(){
+            return this.outBox
+        }
+        setOutBox(){
+            this.outBox =outBox
+        }
+        getInBox(){
+            return this.inBox
+        }
+        setInBox(){
+            this.inBox = inBox
+        }
+    }
+    let IPHONE = new Mobie('iphone',false,100)
+    let NOKIA = new Mobie("nokia",false,100)
+    function onOff(id) {
+        if (id==="onOff-Iphone"){
+            if (IPHONE.getStatus()){
+                IPHONE.setStatus()
+                document.getElementById('onOff-Iphone').innerHTML ='OFF'
+            } else {
+                IPHONE.setStatus()
+                document.getElementById('onOff-Iphone').innerHTML ='ON'
+            }
+        }else  if (id==='onOff-Nokia'){
+            if (NOKIA.getStatus()){
+                NOKIA.setStatus()
+                document.getElementById('onOff-Nokia').innerHTML ='OFF'
+            } else {
+                NOKIA.setStatus()
+                document.getElementById('onOff-Nokia').innerHTML ='ON'
+            }
+        }
+
+    }
+    function checkPin(id) {
+        if (id==='pin-Iphone'){
+            document.getElementById('pin-Iphone').innerHTML = IPHONE.getPin()+'%'
+        }
+        if (id==='pin-Nokia'){
+            document.getElementById("pin-Nokia").innerHTML = NOKIA.getPin()+'%'
+        }
+    }
+    let count =0;
+    function sendMessage(id) {
+        if (id==='message-Iphone'){
+            count++;
+            IPHONE.getOutBox().push(document.getElementById('iphone').value)
+            document.getElementById('nokia').value='you have new '+count+' message'
+            document.getElementById("iphone").value=''
+        }
+        if (id==='message-Nokia'){
+            NOKIA.getOutBox().push(document.getElementById('nokia').value)
+            document.getElementById("nokia").value=''
+        }
+    }
+    function checkInbox(id) {
+        if (id==='inbox-Nokia'){
+            NOKIA.setInBox(IPHONE.getOutBox())
+            console.log('checkinbox   ',NOKIA.getInBox())
+            document.getElementById('nokia').value = NOKIA.getInBox().join('-')
+        }
+        
+    }
+</script>
+</body>
+</html>
